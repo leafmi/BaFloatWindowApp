@@ -1,0 +1,32 @@
+/build
+.idea/
+build
+/local.properties
+
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# Local configuration file (sdk data, etc)
+local.properties
+gradle.properties
+
+# Android Studio
+.gradle
+#gradle
+/*/local.properties
+/*/out
+/*/*/build
+/*/*/production
+*.iml
+*.iws
+*.ipr
+*~
+*.swp
+/app/build
