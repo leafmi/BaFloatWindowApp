@@ -1,0 +1,112 @@
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+
+
+group = PROJ_GROUP
+version = PROJ_VERSION
+project.archivesBaseName = PROJ_ARTIFACTID
+
+
+// 生成jar包的task，
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+// 生成jarDoc的task
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += configurations.compile
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+// 生成javaDoc的jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+javadoc {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        links "https://androiddoc.qiniudn.com/reference/"
+        title "$PROJ_NAME $PROJ_VERSION"
+    }
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name PROJ_NAME
+            description PROJ_DESCRIPTION //project description
+            url PROJ_WEBSITEURL //project weiste url
+
+            packaging 'aar'
+            groupId PROJ_GROUP  //group
+            artifactId PROJ_ARTIFACTID //artifactId
+            version PROJ_VERSION  //version
+
+            // Set your license(软件开源协议，现在一般都是Apache License2.0)
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                connection PROJ_VCSURL // Git仓库地址。
+                url PROJ_WEBSITEURL // 项目主页。
+
+            }
+            //填写开发者基本信息
+            developers {
+                developer {
+                    id DEVELOPER_ID
+                    name DEVELOPER_NAME
+                    email DEVELOPER_EMAIL
+                }
+            }
+        }
+    }
+}
+
+// 这里是读取Bintray相关的信息，我们上传项目到github上的时候会把gradle文件传上去，所以不要把帐号密码的信息直接写在这里，写在local.properties中，这里动态读取。
+bintray {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    user = properties.getProperty('BINTRAY_USER')
+    key = properties.getProperty('BINTRAY_KEY')
+    configurations = ['archives']
+
+    dryRun = false
+    publish = true
+
+    pkg {
+        repo = MAVEN_NAME   //Repository名字 需要自己在bintray网站上先添加
+        name = PROJ_NAME   //发布到JCenter上的项目名字，必须填写
+        licenses = ['Apache-2.0']
+        vcsUrl = PROJ_VCSURL
+        websiteUrl = PROJ_WEBSITEURL
+        issueTrackerUrl = PROJ_ISSUETRACKERURL
+        publicDownloadNumbers = true
+        version {
+            name = PROJ_VERSION
+            desc = PROJ_DESCRIPTION
+            vcsTag = PROJ_VERSION
+
+            gpg {
+                sign = true
+            }
+        }
+    }
+}
