@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#fff">
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="90dp"
+        android:gravity="center"
+        android:text="我是一个浮窗"
+        android:textColor="@color/colorAccent" />
+</RelativeLayout>

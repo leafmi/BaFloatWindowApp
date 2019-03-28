@@ -13,7 +13,7 @@ import com.ba.support.bafloatwindow.util.PermissionUtil;
  * Created by jlang on 2019/3/2.
  */
 
-public class FloatView {
+class FloatView {
 
     private WindowManager mWindowManager;
     private WindowManager.LayoutParams mLayoutParams;
@@ -46,13 +46,12 @@ public class FloatView {
             mLayoutParams.format = PixelFormat.RGBA_8888;
             mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                     | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE   //设置不阻挡其他view的触摸事件
-                    | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
-            mLayoutParams.windowAnimations = 0;
+                    | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;//允许窗口延伸到屏幕外。
         }
     }
 
 
-    public void setView(View view) {
+    void setView(View view) {
         this.mView = view;
     }
 
@@ -73,7 +72,12 @@ public class FloatView {
         mLayoutParams.y = y;
     }
 
-    public void show() {
+    void setAnimation(int animation) {
+        if (mLayoutParams == null) return;
+        mLayoutParams.windowAnimations = animation;
+    }
+
+    void show() {
         try {
             if (mWindowManager != null
                     && mLayoutParams != null
@@ -87,7 +91,7 @@ public class FloatView {
     }
 
 
-    public void dismiss() {
+    void dismiss() {
         try {
             if (mWindowManager != null && mView != null)
                 mWindowManager.removeView(mView);

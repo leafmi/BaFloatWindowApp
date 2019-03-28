@@ -1,4 +1,9 @@
-/build
-.idea/
-build
+*.iml
+.gradle
 /local.properties
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+build
+/build
+.idea

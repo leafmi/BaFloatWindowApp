@@ -21,6 +21,7 @@ public class IFloatWindowImpl extends IFloatWindow {
         mFloatView.setSize(this.mBuild.mWidth, this.mBuild.mHeight);
         mFloatView.setGravity(this.mBuild.mGravity);
         mFloatView.setOffset(this.mBuild.xOffset, this.mBuild.yOffset);
+        mFloatView.setAnimation(this.mBuild.animation);
     }
 
     @Override

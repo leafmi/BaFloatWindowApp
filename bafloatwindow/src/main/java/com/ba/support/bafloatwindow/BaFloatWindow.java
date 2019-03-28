@@ -30,6 +30,8 @@ public class BaFloatWindow extends IBaFloatWindow {
         int xOffset;
         int yOffset;
 
+        int animation = android.R.style.Animation_Dialog;
+
         public Build(Context mApplicationContext) {
             this.mApplicationContext = mApplicationContext;
         }
@@ -62,6 +64,11 @@ public class BaFloatWindow extends IBaFloatWindow {
         public Build setOffset(int xOffset, int yOffset) {
             this.xOffset = xOffset;
             this.yOffset = yOffset;
+            return this;
+        }
+
+        public Build setAnimation(int animation) {
+            this.animation = animation;
             return this;
         }
 

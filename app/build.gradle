@@ -32,5 +32,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation project(path: ":bafloatwindow")
-//    implementation 'com.ba.support.lib:floatwindow:1.0.1'
+//    implementation 'com.ba.support.lib:floatwindow:1.0.3'
 }

@@ -1,10 +1,12 @@
 package com.ba.support.bafloatwindow;
 
+import android.view.View;
+
 /**
  * Created by jlang on 2019/3/2.
  */
 
-public abstract class IBaFloatWindow {
+public class IBaFloatWindow {
     IFloatWindow floatWindow;
 
     public void show() {
@@ -21,5 +23,12 @@ public abstract class IBaFloatWindow {
         if (floatWindow != null)
             return floatWindow.isShowing();
         return false;
+    }
+
+
+    public View getView() {
+        if (floatWindow != null)
+            return floatWindow.getView();
+        return null;
     }
 }
