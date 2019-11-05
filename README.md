@@ -3,7 +3,7 @@
 ## 用法：
 
 直接添加依赖
-> implementation 'com.ba.support.lib:floatwindow:1.0.3'
+> implementation 'com.ba.support.lib:floatwindow:1.0.4'
 
 ## 代码使用：
 >      new BaFloatWindow.Build(this)
@@ -13,3 +13,9 @@
 >                   .setOffset(0, 80)
 >                   .build()
 >                   .show();
+
+## 版本记录：
+v1.0.4
+支持悬浮窗拖动
+v1.0.3
+...
