@@ -1,7 +1,9 @@
 package com.ba.bafloatwindowapp;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
@@ -36,9 +38,26 @@ public class MainActivity extends AppCompatActivity {
         if (mFloatWindow == null)
             mFloatWindow = new BaFloatWindow.Build(this)
                     .setView(R.layout.layout_floatwindow)
-                    .setGravity(Gravity.TOP | Gravity.CENTER)
+                    .setGravity(Gravity.CENTER)
                     .setAnimation(R.style.floatwindow_animation)
-                    .setOffset(0, 80)
+                    .setOffset(0, 0)
+                    .setMove(true)
+                    .setBaFloatWindowListener(new BaFloatWindow.BaFloatWindowListener() {
+                        @Override
+                        public void onPositionUpdate(int x, int y) {
+                            Log.d("TAG_TE", "onPositionUpdate: " + x + "-" + y);
+                        }
+
+                        @Override
+                        public void onShow() {
+                            Log.d("TAG_TE", "onShow: ");
+                        }
+
+                        @Override
+                        public void onDismiss() {
+                            Log.d("TAG_TE", "onDismiss: ");
+                        }
+                    })
                     .build();
         mFloatWindow.show();
     }

@@ -3,6 +3,7 @@ package com.ba.support.bafloatwindow;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -19,8 +20,14 @@ class FloatView {
     private WindowManager.LayoutParams mLayoutParams;
 
     private View mView;
+    private int mX = -1, mY = -1;
+    private boolean isRemove = false;
+
+    private int mScreenHeight, mScreenWidth;
 
     FloatView(Context context) {
+        mScreenHeight = Util.getScreenHeight(context);
+        mScreenWidth = Util.getScreenWidth(context);
         boolean drawOverlays;
         drawOverlays = PermissionUtil.canDrawOverlays(context);
         if (drawOverlays) {
@@ -72,12 +79,14 @@ class FloatView {
         mLayoutParams.y = y;
     }
 
+
     void setAnimation(int animation) {
         if (mLayoutParams == null) return;
         mLayoutParams.windowAnimations = animation;
     }
 
     void show() {
+        isRemove = false;
         try {
             if (mWindowManager != null
                     && mLayoutParams != null
@@ -92,11 +101,40 @@ class FloatView {
 
 
     void dismiss() {
+        isRemove = true;
         try {
             if (mWindowManager != null && mView != null)
                 mWindowManager.removeView(mView);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateXY(int x, int y) {
+        if (isRemove) return;
+        mLayoutParams.x = mX = x;
+        mLayoutParams.y = mY = y;
+        Log.d("TAG_TEST", "updateXY: " + x + " -- " + y);
+        mWindowManager.updateViewLayout(mView, mLayoutParams);
+    }
+
+    void updateX(int x) {
+        if (isRemove) return;
+        mLayoutParams.x = mX = x;
+        mWindowManager.updateViewLayout(mView, mLayoutParams);
+    }
+
+    void updateY(int y) {
+        if (isRemove) return;
+        mLayoutParams.y = mY = y;
+        mWindowManager.updateViewLayout(mView, mLayoutParams);
+    }
+
+    int getX() {
+        return mX;
+    }
+
+    int getY() {
+        return mY;
     }
 }

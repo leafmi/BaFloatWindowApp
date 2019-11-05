@@ -1,8 +1,10 @@
 package com.ba.support.bafloatwindow;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,9 @@ public class BaFloatWindow extends IBaFloatWindow {
         int yOffset;
 
         int animation = android.R.style.Animation_Dialog;
+
+        boolean boolMove = false;
+        BaFloatWindowListener baFloatWindowListener;
 
         public Build(Context mApplicationContext) {
             this.mApplicationContext = mApplicationContext;
@@ -72,6 +77,16 @@ public class BaFloatWindow extends IBaFloatWindow {
             return this;
         }
 
+        public Build setMove(boolean move) {
+            this.boolMove = move;
+            return this;
+        }
+
+        public Build setBaFloatWindowListener(BaFloatWindowListener baFloatWindowListener) {
+            this.baFloatWindowListener = baFloatWindowListener;
+            return this;
+        }
+
         public BaFloatWindow build() {
             if (mView == null && mLayoutId == 0) {
                 throw new IllegalArgumentException("View has not been set!");
@@ -81,5 +96,14 @@ public class BaFloatWindow extends IBaFloatWindow {
             }
             return new BaFloatWindow(this);
         }
+    }
+
+
+    public interface BaFloatWindowListener {
+        void onPositionUpdate(int x, int y);
+
+        void onShow();
+
+        void onDismiss();
     }
 }
