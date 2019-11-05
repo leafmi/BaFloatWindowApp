@@ -30,3 +30,4 @@ gradle.properties
 *~
 *.swp
 /app/build
+.idea
