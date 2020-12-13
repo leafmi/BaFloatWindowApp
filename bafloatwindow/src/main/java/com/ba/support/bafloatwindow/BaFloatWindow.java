@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,9 @@ public class BaFloatWindow extends IBaFloatWindow {
         int mGravity = Gravity.TOP | Gravity.START;
         int xOffset;
         int yOffset;
+
+        //点击事件
+        SparseArray<View.OnClickListener> mClickArray = new SparseArray<>();
 
         int animation = android.R.style.Animation_Dialog;
 
@@ -63,6 +67,11 @@ public class BaFloatWindow extends IBaFloatWindow {
 
         public Build setGravity(int gravity) {
             this.mGravity = gravity;
+            return this;
+        }
+
+        public Build setOnclickListener(int view, View.OnClickListener listener) {
+            mClickArray.put(view, listener);
             return this;
         }
 

@@ -42,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
                     .setAnimation(R.style.floatwindow_animation)
                     .setOffset(0, 0)
                     .setMove(true)
+                    .setOnclickListener(R.id.tv_click, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d("TAG_TE", "点击事件111");
+                        }
+                    })
                     .setBaFloatWindowListener(new BaFloatWindow.BaFloatWindowListener() {
                         @Override
                         public void onPositionUpdate(int x, int y) {
@@ -50,12 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onShow() {
-                            Log.d("TAG_TE", "onShow: ");
                         }
 
                         @Override
                         public void onDismiss() {
-                            Log.d("TAG_TE", "onDismiss: ");
                         }
                     })
                     .build();

@@ -31,9 +31,9 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation project(path: ":bafloatwindow")
+//    implementation project(path: ":bafloatwindow")
 //    implementation files('libs/floatwindow-release.aar')
 //    implementation files('libs/floatwindow-debug.aar')
-//    implementation 'com.ba.support.lib:floatwindow:1.0.3'
+    implementation 'com.ba.support.lib:floatwindow:1.0.6'
 
 }

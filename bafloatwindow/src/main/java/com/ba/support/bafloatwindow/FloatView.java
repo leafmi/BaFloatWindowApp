@@ -4,10 +4,13 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.ba.support.bafloatwindow.util.PermissionUtil;
+
+import java.lang.ref.WeakReference;
 
 
 /**
@@ -24,6 +27,7 @@ class FloatView {
     private boolean isRemove = false;
 
     private int mScreenHeight, mScreenWidth;
+    private SparseArray<WeakReference<View>> mIdViews = new SparseArray<>();
 
     FloatView(Context context) {
         mScreenHeight = Util.getScreenHeight(context);
@@ -58,8 +62,30 @@ class FloatView {
     }
 
 
+    private <T extends View> T getView(int viewId) {
+        WeakReference<View> viewReference = mIdViews.get(viewId);
+        View view = null;
+        if (viewReference != null) {
+            view = mIdViews.get(viewId).get();
+        }
+        if (view == null) {
+            view = mView.findViewById(viewId);
+            if (view != null) {
+                mIdViews.put(viewId, new WeakReference<>(view));
+            }
+        }
+        return (T) view;
+    }
+
     void setView(View view) {
         this.mView = view;
+    }
+
+    public void setOnClickListener(int viewId, View.OnClickListener onClickListener) {
+        View view = getView(viewId);
+        if (view != null) {
+            view.setOnClickListener(onClickListener);
+        }
     }
 
     void setSize(int width, int height) {
@@ -75,8 +101,8 @@ class FloatView {
 
     void setOffset(int x, int y) {
         if (mLayoutParams == null) return;
-        mLayoutParams.x = x;
-        mLayoutParams.y = y;
+        mLayoutParams.x = mX = x;
+        mLayoutParams.y = mY = y;
     }
 
 

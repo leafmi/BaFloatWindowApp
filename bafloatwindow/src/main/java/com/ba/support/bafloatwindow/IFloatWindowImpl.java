@@ -31,6 +31,11 @@ public class IFloatWindowImpl extends IFloatWindow {
         mFloatView.setGravity(this.mBuild.mGravity);
         mFloatView.setOffset(this.mBuild.xOffset, this.mBuild.yOffset);
         mFloatView.setAnimation(this.mBuild.animation);
+        ///设置点击事件
+        int clickArraySize = build.mClickArray.size();
+        for (int i = 0; i < clickArraySize; i++) {
+            mFloatView.setOnClickListener(build.mClickArray.keyAt(i), build.mClickArray.valueAt(i));
+        }
     }
 
     @Override
@@ -103,4 +108,5 @@ public class IFloatWindowImpl extends IFloatWindow {
             }
         });
     }
+
 }
