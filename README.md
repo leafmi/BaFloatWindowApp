@@ -3,7 +3,7 @@
 ## 用法：
 
 直接添加依赖
-> implementation 'com.ba.support.lib:floatwindow:1.0.4'
+> implementation 'com.ba.support.lib:floatwindow:1.0.6'
 
 ## 代码使用：
 >      new BaFloatWindow.Build(this)
