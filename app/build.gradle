@@ -34,6 +34,6 @@ dependencies {
 //    implementation project(path: ":bafloatwindow")
 //    implementation files('libs/floatwindow-release.aar')
 //    implementation files('libs/floatwindow-debug.aar')
-    implementation 'com.ba.support.lib:floatwindow:1.0.6'
+    implementation 'com.ba.support.lib:floatwindow:1.0.8'
 
 }

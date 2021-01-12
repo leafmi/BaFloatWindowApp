@@ -88,6 +88,13 @@ class FloatView {
         }
     }
 
+    public void addLayoutParamsFlags(int flags) {
+        if (mLayoutParams != null) {
+            int lodFlags = mLayoutParams.flags;
+            mLayoutParams.flags = lodFlags | flags;
+        }
+    }
+
     void setSize(int width, int height) {
         if (mLayoutParams == null) return;
         mLayoutParams.width = width;
@@ -131,6 +138,7 @@ class FloatView {
         try {
             if (mWindowManager != null && mView != null)
                 mWindowManager.removeView(mView);
+//            mWindowManager.removeViewImmediate(mView);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -140,7 +148,6 @@ class FloatView {
         if (isRemove) return;
         mLayoutParams.x = mX = x;
         mLayoutParams.y = mY = y;
-        Log.d("TAG_TEST", "updateXY: " + x + " -- " + y);
         mWindowManager.updateViewLayout(mView, mLayoutParams);
     }
 

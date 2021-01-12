@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ba.support.bafloatwindow.BaFloatWindow;
+import com.ba.support.bafloatwindow.Screen;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
                     .setAnimation(R.style.floatwindow_animation)
                     .setOffset(0, 0)
                     .setMove(true)
+                    .setHeight(Screen.height,0.4f)
+                    .setOutsideCanCancel(true)
+                    .setOnclickListener(R.id.btn_action, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(MainActivity.this,"点到我了",Toast.LENGTH_SHORT).show();
+                        }
+                    })
                     .setOnclickListener(R.id.tv_click, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

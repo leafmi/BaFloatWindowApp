@@ -39,6 +39,7 @@ public class BaFloatWindow extends IBaFloatWindow {
         int animation = android.R.style.Animation_Dialog;
 
         boolean boolMove = false;
+        boolean outsideCanCancel = false;
         BaFloatWindowListener baFloatWindowListener;
 
         public Build(Context mApplicationContext) {
@@ -57,6 +58,20 @@ public class BaFloatWindow extends IBaFloatWindow {
 
         public Build setWidth(int width) {
             mWidth = width;
+            return this;
+        }
+
+        public Build setWidth(@Screen.screenType int screenType, float ratio) {
+            mWidth = (int) ((screenType == Screen.width ?
+                    Util.getScreenWidth(mApplicationContext) :
+                    Util.getScreenHeight(mApplicationContext)) * ratio);
+            return this;
+        }
+
+        public Build setHeight(@Screen.screenType int screenType, float ratio) {
+            mHeight = (int) ((screenType == Screen.width ?
+                    Util.getScreenWidth(mApplicationContext) :
+                    Util.getScreenHeight(mApplicationContext)) * ratio);
             return this;
         }
 
@@ -93,6 +108,11 @@ public class BaFloatWindow extends IBaFloatWindow {
 
         public Build setBaFloatWindowListener(BaFloatWindowListener baFloatWindowListener) {
             this.baFloatWindowListener = baFloatWindowListener;
+            return this;
+        }
+
+        public Build setOutsideCanCancel(Boolean outsideCanCancel) {
+            this.outsideCanCancel = outsideCanCancel;
             return this;
         }
 

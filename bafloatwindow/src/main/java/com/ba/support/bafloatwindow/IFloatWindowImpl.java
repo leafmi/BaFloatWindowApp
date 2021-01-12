@@ -3,6 +3,7 @@ package com.ba.support.bafloatwindow;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.WindowManager;
 
 /**
  * Created by jlang on 2019/3/2.
@@ -24,13 +25,14 @@ public class IFloatWindowImpl extends IFloatWindow {
     IFloatWindowImpl(BaFloatWindow.Build build) {
         this.mBuild = build;
         mFloatView = new FloatView(this.mBuild.mApplicationContext);
-        if (this.mBuild.boolMove)
-            initTouchEvent();
+        initTouchEvent();
         mFloatView.setView(this.mBuild.mView);
         mFloatView.setSize(this.mBuild.mWidth, this.mBuild.mHeight);
         mFloatView.setGravity(this.mBuild.mGravity);
         mFloatView.setOffset(this.mBuild.xOffset, this.mBuild.yOffset);
         mFloatView.setAnimation(this.mBuild.animation);
+        if (this.mBuild.outsideCanCancel)
+            mFloatView.addLayoutParamsFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
         ///设置点击事件
         int clickArraySize = build.mClickArray.size();
         for (int i = 0; i < clickArraySize; i++) {
@@ -82,26 +84,37 @@ public class IFloatWindowImpl extends IFloatWindow {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        downX = event.getRawX();
-                        downY = event.getRawY();
-                        lastX = event.getRawX();
-                        lastY = event.getRawY();
+                        if (mBuild.boolMove) {
+                            downX = event.getRawX();
+                            downY = event.getRawY();
+                            lastX = event.getRawX();
+                            lastY = event.getRawY();
+                        }
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        changeX = event.getRawX() - lastX;
-                        changeY = event.getRawY() - lastY;
-                        newX = (int) (mFloatView.getX() + changeX);
-                        newY = (int) (mFloatView.getY() + changeY);
-                        mFloatView.updateXY(newX, newY);
-                        if (mBuild.baFloatWindowListener != null)
-                            mBuild.baFloatWindowListener.onPositionUpdate(newX, newY);
-                        lastX = event.getRawX();
-                        lastY = event.getRawY();
+                        if (mBuild.boolMove) {
+                            changeX = event.getRawX() - lastX;
+                            changeY = event.getRawY() - lastY;
+                            newX = (int) (mFloatView.getX() + changeX);
+                            newY = (int) (mFloatView.getY() + changeY);
+                            mFloatView.updateXY(newX, newY);
+                            if (mBuild.baFloatWindowListener != null)
+                                mBuild.baFloatWindowListener.onPositionUpdate(newX, newY);
+                            lastX = event.getRawX();
+                            lastY = event.getRawY();
+                        }
+
                         break;
                     case MotionEvent.ACTION_UP:
-                        upX = event.getRawX();
-                        upY = event.getRawY();
-                        mClick = (Math.abs(upX - downX) > mSlop) || (Math.abs(upY - downY) > mSlop);
+                        if (mBuild.boolMove) {
+                            upX = event.getRawX();
+                            upY = event.getRawY();
+                            mClick = (Math.abs(upX - downX) > mSlop) || (Math.abs(upY - downY) > mSlop);
+                        }
+                        break;
+                    case MotionEvent.ACTION_OUTSIDE:
+                        if (isShow && mBuild.outsideCanCancel)
+                            dismiss();
                         break;
                 }
                 return mClick;
